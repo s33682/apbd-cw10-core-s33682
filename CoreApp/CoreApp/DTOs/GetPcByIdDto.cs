@@ -1,17 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+﻿namespace CoreApp.DTOs;
 
-namespace CoreApp.Models;
-
-public class PC
+public class GetPcByIdDto
 {
-    [Key]
     public int Id { get; set; }
-    [MaxLength(50)]
     public string Name { get; set; } = string.Empty;
     public float Weight { get; set; }
     public int Warranty { get; set; }
     public DateTime CreatedAt { get; set; }
     public int Stock { get; set; }
-    public ICollection<PCComponents> PcComponents { get; set; } = [];
+    public List<GetPcComponentsDto> Components { get; set; } = [];
 }

@@ -11,4 +11,5 @@ public class ComponentManufacturers
     [MaxLength(300)]
     public string FullName { get; set; }
     public DateOnly FoundationDate { get; set; }
+    public ICollection<Components> Components { get; set; } = [];
 }

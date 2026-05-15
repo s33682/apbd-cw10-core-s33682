@@ -10,4 +10,5 @@ public class ComponentTypes
     public string Abbreviation { get; set; }
     [MaxLength(150)]
     public string Name { get; set; }
+    public ICollection<Components> Components { get; set; } = [];
 }

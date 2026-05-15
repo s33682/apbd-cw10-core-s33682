@@ -28,4 +28,19 @@ public class PCsController : ControllerBase
             return NotFound(e.Message);
         }
     }
+
+    [HttpGet]
+    [Route("{pcId:int}/components")]
+    public async Task<IActionResult> GetPcById(int pcId)
+    {
+        try
+        {
+            var result = await _dbService.GetPcByIdsAsync(pcId);
+            return Ok(result);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
 }
