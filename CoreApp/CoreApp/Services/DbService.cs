@@ -75,4 +75,28 @@ public class DbService : IDbService
             }).ToList()
         };
     }
+    public async Task<GetPcDto> AddPcAsync(PostPcDto postPc)
+    {
+        var newPc = new PC
+        {
+            Name = postPc.Name,
+            Weight =  postPc.Weight,
+            Warranty =  postPc.Warranty,
+            CreatedAt =  postPc.CreatedAt,
+            Stock =  postPc.Stock
+        };
+        
+        _context.PCs.Add(newPc);
+        await _context.SaveChangesAsync();
+
+        return new GetPcDto
+        {
+            Id = newPc.Id,
+            Name = newPc.Name,
+            Weight = newPc.Weight,
+            Warranty = newPc.Warranty,
+            CreatedAt = newPc.CreatedAt,
+            Stock = newPc.Stock
+        };
+    }
 }

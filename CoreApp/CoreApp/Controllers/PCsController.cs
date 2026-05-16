@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CoreApp.Exceptions;
 using CoreApp.Services;
+using CoreApp.DTOs;
 
 namespace CoreApp.Controllers;
 
@@ -41,6 +42,20 @@ public class PCsController : ControllerBase
         catch (NotFoundException e)
         {
             return NotFound(e.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddPc(PostPcDto postPc)
+    {
+        try
+        {
+            var result = await _dbService.AddPcAsync(postPc);
+            return Created("", result);
+        }
+        catch (DatabaseException e)
+        {
+            return StatusCode(500, e.Message);
         }
     }
 }
