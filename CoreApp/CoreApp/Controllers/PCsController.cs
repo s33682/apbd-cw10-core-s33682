@@ -58,4 +58,34 @@ public class PCsController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpPut]
+    [Route("{pcId:int}")]
+    public async Task<IActionResult> UpdatePc(int pcId, PostPcDto postPc)
+    {
+        try
+        {
+            var result = await _dbService.UpdatePcAsync(pcId, postPc);
+            return Ok(result);
+        }
+        catch(NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    [HttpDelete]
+    [Route("{pcId:int}")]
+    public async Task<IActionResult> DeletePc(int pcId)
+    {
+        try
+        {
+            await _dbService.DeletePcAsync(pcId);
+            return NoContent();
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
 }

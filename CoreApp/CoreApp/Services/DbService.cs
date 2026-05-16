@@ -99,4 +99,45 @@ public class DbService : IDbService
             Stock = newPc.Stock
         };
     }
+
+    public async Task<GetPcDto> UpdatePcAsync(int pcId, PostPcDto postPc)
+    {
+        var updatePc = await _context.PCs.FirstOrDefaultAsync(p => p.Id ==  pcId);
+
+        if (updatePc == null)
+        {
+            throw new NotFoundException($"PC not found with id {pcId}!");
+        }
+        
+        updatePc.Name = postPc.Name;
+        updatePc.Weight = postPc.Weight;
+        updatePc.Warranty = postPc.Warranty;
+        updatePc.CreatedAt = postPc.CreatedAt;
+        updatePc.Stock = postPc.Stock;
+
+        await _context.SaveChangesAsync();
+
+        return new GetPcDto
+        {
+            Id = updatePc.Id,
+            Name = updatePc.Name,
+            Weight = updatePc.Weight,
+            Warranty = updatePc.Warranty,
+            CreatedAt = updatePc.CreatedAt,
+            Stock = updatePc.Stock
+        };
+    }
+
+    public async Task DeletePcAsync(int pcId)
+    {
+        var pc = await _context.PCs.FirstOrDefaultAsync(p => p.Id == pcId);
+
+        if (pc == null)
+        {
+            throw new NotFoundException($"PC not found with id {pcId}!");
+        }
+        
+        _context.PCs.Remove(pc);
+        await _context.SaveChangesAsync();
+    }
 }
