@@ -53,7 +53,7 @@ public class PCsController : ControllerBase
             var result = await _dbService.AddPcAsync(postPc);
             return Created("", result);
         }
-        catch (DatabaseException e)
+        catch (Exception e)
         {
             return StatusCode(500, e.Message);
         }
